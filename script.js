@@ -46,6 +46,11 @@ function saveData() {
     localStorage.setItem('pirka_puzzle_data', JSON.stringify(appState));
 }
 
+// スタート画面用のDOM
+const startScreen = document.getElementById('start-screen');
+const mainContents = document.getElementById('main-contents');
+const btnStartApp = document.getElementById('btn-start-app');
+
 const screenHome = document.getElementById('screen-home');
 const screenAlbum = document.getElementById('screen-album');
 const navHome = document.getElementById('nav-home');
@@ -73,6 +78,13 @@ const detailName = document.getElementById('detail-name');
 const detailDate = document.getElementById('detail-date');
 const detailMemories = document.getElementById('detail-memories');
 const btnCloseDetail = document.getElementById('btn-close-detail');
+
+// 🌟 スタートボタンのクリックイベント
+btnStartApp.addEventListener('click', () => {
+    startScreen.classList.add('hidden'); // タイトル画面を消す
+    mainContents.classList.remove('hidden'); // 本編を表示
+    renderPuzzleBoard();
+});
 
 navHome.addEventListener('click', () => {
     navHome.classList.add('active'); navAlbum.classList.remove('active');
@@ -217,7 +229,7 @@ btnCompleteTodo.addEventListener('click', () => {
             appState.completedCount += 1;
 
             setTimeout(() => {
-                alert(`パズルが完全に揃いました！🧩✨\nがんばったあなたの思い出として、宝箱へ大切にしまいます。`);
+                alert(`パズルが完全に揃いました！🧩✨\nがまとめたあなたの思い出として、宝箱へ大切にしまいます。`);
 
                 appState.archive.push({
                     id: Date.now(),
@@ -282,7 +294,6 @@ btnCloseDetail.addEventListener('click', () => detailPopup.classList.add('hidden
 
 // 起動処理
 loadData();
-renderPuzzleBoard();
 
 window.addEventListener('click', (e) => {
     if (e.target === fortunePopup) fortunePopup.classList.add('hidden');
