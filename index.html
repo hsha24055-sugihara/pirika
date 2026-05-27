@@ -3,84 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pirka（ピリカ）- あなたに寄り添うお守りアプリ</title>
+    <title>Pirka（ピリカ）- あなたに寄り添うパズルお守り</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- ナビゲーションバー -->
         <nav class="app-nav">
             <button id="nav-home" class="nav-btn active">ピリカ</button>
-            <button id="nav-album" class="nav-btn">標本箱</button>
+            <button id="nav-album" class="nav-btn">宝箱</button>
+            <button id="btn-open-todo" class="todo-trigger-btn">
+                📋<span id="todo-badge" class="todo-badge hidden">0</span>
+            </button>
         </nav>
 
-        <!-- メインコンテンツエリア -->
         <main class="app-main">
-            
-            <!-- ホーム画面 -->
             <section id="screen-home" class="app-screen">
                 <div class="welcome-section">
                     <h1 class="app-title">Pirka</h1>
-                    <p class="question-text">どんな気分？？</p>
+                    <p class="question-text">どんな気分？？お守りメッセージをパズルにしよう</p>
                 </div>
 
-                <!-- 気分選択肢 -->
                 <div class="mood-options">
                     <button class="mood-btn" data-mood="romance">恋愛的にさみしい / 不安</button>
                     <button class="mood-btn" data-mood="fun">生活の中で楽しいことないかな</button>
                     <button class="mood-btn" data-mood="daily">日常の不安（その他）</button>
                 </div>
 
-                <!-- キャラクター表示エリア -->
-                <div class="character-display">
-                    <div class="character-stage-wrapper">
-                        <div id="main-character" class="cloud-character stage-1"></div>
-                        <div class="shadow"></div>
-                    </div>
-                    <div class="growth-info">
-                        <span id="current-evolution-name">ふしぎな浮かぶ雲</span>
-                        <div class="growth-bar-container">
-                            <div id="growth-bar" style="width: 0%;"></div>
+                <div class="puzzle-display">
+                    <div id="puzzle-board" class="puzzle-board">
                         </div>
-                        <span id="growth-text">成長度: 1 / 5</span>
+                    <div class="growth-info">
+                        <span id="current-evolution-name">パズル作成中...</span>
+                        <div class="growth-bar-container">
+                            <div id="growth-bar"></div>
+                        </div>
+                        <span id="growth-text">集まったピース: 0 / 9</span>
                     </div>
                 </div>
 
-                <!-- おみくじ結果表示ポップアップ -->
                 <div id="fortune-popup" class="popup hidden">
                     <div class="popup-content">
                         <h3>今日のお守りメッセージ</h3>
                         <p id="fortune-text" class="fortune-message"></p>
                         <div class="popup-buttons">
-                            <button id="btn-do-action" class="primary-btn">やってみる！（できた！に登録）</button>
-                            <button id="btn-close-popup" class="secondary-btn">閉じる</button>
+                            <button id="btn-add-todo" class="primary-btn">やってみる！（リストに登録）</button>
+                            <button id="btn-close-fortune" class="secondary-btn">閉じる</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="todo-popup" class="popup hidden">
+                    <div class="popup-content">
+                        <h3>登録中のやることリスト</h3>
+                        <p style="font-size: 12px; color: var(--text-sub);">実行できたものを選んでボタンを押してね！</p>
+                        <div id="todo-list-container" class="todo-list-container">
+                            </div>
+                        <div class="popup-buttons">
+                            <button id="btn-complete-todo" class="primary-btn">できた！（パズルをはめる）</button>
+                            <button id="btn-close-todo" class="secondary-btn">閉じる</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- アルバム（標本箱）画面 -->
             <section id="screen-album" class="app-screen hidden">
-                <h2 class="screen-title">思い出の標本箱</h2>
-                <p class="screen-subtitle">これまでに育ち切ったキャラクターたちのアルバムです</p>
+                <h2 class="screen-title">思い出の宝箱</h2>
+                <p class="screen-subtitle">これまでに完成させたパズルのコレクション</p>
                 
-                <div id="album-grid" class="specimen-box">
-                    <!-- JavaScriptで動的に追加される -->
-                </div>
+                <div id="archive-grid" class="puzzle-archive-box"></div>
 
-                <!-- キャラクター詳細ポップアップ -->
                 <div id="detail-popup" class="popup hidden">
                     <div class="popup-content detail-content">
                         <h3 id="detail-name"></h3>
-                        <div id="detail-avatar" class="detail-char-view"></div>
-                        
                         <div class="detail-info-table">
                             <div class="info-row">
-                                <span class="info-label">育ち切った日</span>
+                                <span class="info-label">完成した日</span>
                                 <span id="detail-date" class="info-value"></span>
                             </div>
                             <div class="info-row memory-row">
-                                <span class="info-label">クリアした行動（思い出）</span>
+                                <span class="info-label">クリアしたメッセージ一覧</span>
                                 <div id="detail-memories" class="info-value memory-list"></div>
                             </div>
                         </div>
@@ -88,7 +89,6 @@
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 

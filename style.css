@@ -1,4 +1,3 @@
-/* 全体のリセットと変数定義 */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,19 +6,20 @@
 }
 
 :root {
-    /* 科学的に落ち着く・目に優しいソフトアースカラー */
-    --bg-color: #f4f6f0;       /* 柔らかなセージグリーンがかった白 */
+    --bg-color: #f4f6f0;
     --card-bg: #ffffff;
-    --text-main: #4a5243;      /* 優しいダークオリーブ */
-    --text-sub: #7e8775;       /* やわらかいオリーブグレー */
-    --accent-sage: #9bb097;    /* 心を落ち着かせるセージグリーン */
-    --accent-rose: #d6b2b1;    /* 寂しさを癒すダスティローズ */
-    --accent-sand: #e6dfd3;    /* 安心感のあるサンドベージュ */
+    --text-main: #4a5243;
+    --text-sub: #7e8775;
+    --accent-sage: #9bb097;
     --border-color: #e0e5da;
+    
+    --color-romance: #f3babc;
+    --color-fun: #f7d282;
+    --color-daily: #b7dfb3;
 }
 
 body {
-    background-color: #cbd5c5; /* 背景外側は落ち着いた深めのセージ */
+    background-color: #cbd5c5; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +27,6 @@ body {
     color: var(--text-main);
 }
 
-/* スマホサイズのモックアップコンテナ */
 .app-container {
     width: 100%;
     max-width: 414px;
@@ -41,12 +40,12 @@ body {
     position: relative;
 }
 
-/* ナビゲーションバー */
 .app-nav {
     display: flex;
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border-color);
     padding: 10px 0;
+    position: relative;
 }
 
 .nav-btn {
@@ -66,19 +65,38 @@ body {
     color: var(--accent-sage);
 }
 
-.nav-btn.active::after {
-    content: '';
+.todo-trigger-btn {
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 3px;
-    background-color: var(--accent-sage);
-    border-radius: 2px;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+.todo-trigger-btn:active { transform: translateY(-50%) scale(0.95); }
+
+.todo-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #ff6b6b;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
 }
 
-/* メイン画面エリア */
 .app-main {
     flex: 1;
     padding: 24px;
@@ -92,58 +110,44 @@ body {
     height: 100%;
 }
 
-.hidden {
-    display: none !important;
-}
+.hidden { display: none !important; }
 
-/* ホーム画面の要素 */
 .welcome-section {
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 24px;
+    margin-top: 5px;
+    margin-bottom: 16px;
 }
 
 .app-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 400;
     color: var(--text-main);
     letter-spacing: 2px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
-.question-text {
-    font-size: 16px;
-    color: var(--text-sub);
-}
+.question-text { font-size: 14px; color: var(--text-sub); }
 
-/* 気分選択肢ボタン */
 .mood-options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 30px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .mood-btn {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 16px;
-    border-radius: 16px;
-    font-size: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 13px;
     color: var(--text-main);
     cursor: pointer;
     text-align: left;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
-.mood-btn:active {
-    transform: scale(0.98);
-    background-color: #fafbf9;
-}
-
-/* キャラクター表示エリア */
-.character-display {
+.puzzle-display {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -151,184 +155,67 @@ body {
     justify-content: center;
     background-color: var(--card-bg);
     border-radius: 24px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
-}
-
-.character-stage-wrapper {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* 不思議な雲の基本アニメーション */
-.cloud-character {
-    width: 80px;
-    height: 50px;
-    border-radius: 100px;
-    position: relative;
-    animation: float 4s ease-in-out infinite;
-    transition: all 0.5s ease;
-}
-
-/* 雲のぽこぽこ感をCSS生成 */
-.cloud-character::before, .cloud-character::after {
-    content: '';
-    position: absolute;
-    background-inherit: inherit;
-    border-radius: 50%;
-}
-
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.shadow {
-    width: 60px;
-    height: 6px;
-    background: rgba(0,0,0,0.04);
-    border-radius: 50%;
-    position: absolute;
-    bottom: -10px;
-    animation: shadowPulse 4s ease-in-out infinite;
-}
-
-@keyframes shadowPulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(0.8); opacity: 0.4; }
-    100% { transform: scale(1); opacity: 0.8; }
-}
-
-/* 段階・状態別ビジュアル表現 */
-/* 第1段階：不思議な浮かぶ雲（全共通初期状態） */
-.cloud-character.stage-1 {
-    background-color: #ffffff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), inset -5px -5px 10px rgba(230,235,225,0.5);
-}
-.cloud-character.stage-1::before { width: 40px; height: 40px; top: -20px; left: 15px; background: #ffffff; }
-.cloud-character.stage-1::after { width: 30px; height: 30px; top: -12px; left: 45px; background: #ffffff; }
-
-/* 恋愛ルート進化形態 */
-.cloud-character.romance-stage-2 { background-color: #f7e6e6; }
-.cloud-character.romance-stage-2::before { width: 40px; height: 40px; top: -20px; left: 15px; background: #f7e6e6; }
-.cloud-character.romance-stage-2::after { width: 30px; height: 30px; top: -12px; left: 45px; background: #f7e6e6; }
-
-.cloud-character.romance-stage-3 { background-color: #f3d1d1; border-radius: 80px 80px 40px 40px; }
-.cloud-character.romance-stage-4 { background-color: #eca9a8; border-radius: 50%; width: 70px; height: 70px; }
-.cloud-character.romance-stage-5 { 
-    background-color: #e58b88; 
-    clip-path: polygon(50% 15%, 65% 0%, 85% 0%, 100% 20%, 100% 50%, 50% 100%, 0% 50%, 0% 20%, 15% 0%, 35% 0%);
-    width: 70px; height: 70px;
-} /* 恋するハートの結晶 */
-
-/* 楽しいことルート進化形態 */
-.cloud-character.fun-stage-2 { background-color: #fcf6e5; }
-.cloud-character.fun-stage-2::before { width: 40px; height: 40px; top: -20px; left: 15px; background: #fcf6e5; }
-.cloud-character.fun-stage-2::after { width: 30px; height: 30px; top: -12px; left: 45px; background: #fcf6e5; }
-
-.cloud-character.fun-stage-3 { background-color: #faeba8; border-radius: 100px 30px 100px 30px; }
-.cloud-character.fun-stage-4 { background-color: #f6dc77; width: 70px; height: 70px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-.cloud-character.fun-stage-5 { 
-    background-color: #f1cb44; 
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-    width: 75px; height: 75px;
-} /* 毎日のきらきら星 */
-
-/* 日常の不安ルート進化形態 */
-.cloud-character.daily-stage-2 { background-color: #e8f0e6; }
-.cloud-character.daily-stage-2::before { width: 40px; height: 40px; top: -20px; left: 15px; background: #e8f0e6; }
-.cloud-character.daily-stage-2::after { width: 30px; height: 30px; top: -12px; left: 45px; background: #e8f0e6; }
-
-.cloud-character.daily-stage-3 { background-color: #d1e3ce; border-radius: 40px 40px 100px 100px; }
-.cloud-character.daily-stage-4 { background-color: #b7d3b3; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; width: 70px; height: 75px; }
-.cloud-character.daily-stage-5 { 
-    background-color: #9bb097; 
-    border-radius: 50% 50% 50% 50% / 80% 80% 30% 30%;
-    width: 65px; height: 80px;
-} /* おちつく森のしずく */
-
-
-/* 成長インフォ */
-.growth-info {
-    width: 100%;
-    text-align: center;
-}
-
-#current-evolution-name {
-    font-size: 15px;
-    font-weight: bold;
-    color: var(--text-main);
-    display: block;
-    margin-bottom: 8px;
-}
-
-.growth-bar-container {
-    width: 100%;
-    height: 8px;
-    background-color: var(--bg-color);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 6px;
+    padding: 16px;
     border: 1px solid var(--border-color);
 }
 
-#growth-bar {
-    height: 100%;
-    background-color: var(--accent-sage);
-    border-radius: 4px;
-    transition: width 0.5s ease;
-}
-
-#growth-text {
-    font-size: 12px;
-    color: var(--text-sub);
-}
-
-/* ポップアップ共通 */
-.popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(74, 82, 67, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    z-index: 10;
-    backdrop-filter: blur(4px);
-    transition: opacity 0.3s ease;
-}
-
-.popup-content {
-    background-color: var(--card-bg);
-    width: 100%;
-    border-radius: 24px;
-    padding: 24px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes scaleUp {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.popup h3 {
-    font-size: 18px;
-    color: var(--text-main);
+.puzzle-board {
+    width: 180px;
+    height: 180px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+    background-color: #eef1ea;
+    padding: 4px;
+    border-radius: 14px;
     margin-bottom: 16px;
-    font-weight: bold;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
 }
+
+.puzzle-piece {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 6px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px dashed var(--border-color);
+}
+
+.puzzle-piece.filled {
+    border: none;
+    animation: popIn 0.3s ease-out;
+}
+.puzzle-piece.filled-romance { background-color: var(--color-romance); }
+.puzzle-piece.filled-fun { background-color: var(--color-fun); }
+.puzzle-piece.filled-daily { background-color: var(--color-daily); }
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.growth-info { width: 100%; text-align: center; }
+#current-evolution-name { font-size: 14px; font-weight: bold; display: block; margin-bottom: 6px; }
+.growth-bar-container {
+    width: 100%; height: 8px; background-color: var(--bg-color);
+    border-radius: 4px; overflow: hidden; margin-bottom: 4px; border: 1px solid var(--border-color);
+}
+#growth-bar { height: 100%; background-color: var(--accent-sage); width: 0%; transition: width 0.4s ease; }
+#growth-text { font-size: 11px; color: var(--text-sub); }
+
+.popup {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(74, 82, 67, 0.4); display: flex; justify-content: center; align-items: center;
+    padding: 20px; z-index: 10; backdrop-filter: blur(4px);
+}
+.popup-content {
+    background-color: var(--card-bg); width: 100%; border-radius: 24px; padding: 24px; text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); animation: scaleUp 0.2s ease-out;
+}
+@keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 .fortune-message {
     font-size: 15px;
@@ -360,10 +247,7 @@ body {
     width: 100%;
     transition: background-color 0.2s;
 }
-
-.primary-btn:hover {
-    background-color: #8fa38b;
-}
+.primary-btn:hover { background-color: #8fa38b; }
 
 .secondary-btn {
     background: none;
@@ -376,124 +260,44 @@ body {
     width: 100%;
 }
 
-/* 標本箱（アルバム）画面 */
-.screen-title {
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 4px;
-    font-weight: bold;
+.todo-list-container {
+    max-height: 250px; overflow-y: auto; text-align: left; margin: 15px 0; display: flex; flex-direction: column; gap: 10px;
 }
+.todo-item {
+    background-color: var(--bg-color); border: 1px solid var(--border-color);
+    padding: 12px; border-radius: 12px; cursor: pointer; transition: all 0.2s; position: relative;
+}
+.todo-item:hover { background-color: #edf1e9; }
+.todo-item.selected {
+    border: 2px solid var(--accent-sage); background-color: #f1f5ee;
+}
+.todo-item-tag {
+    font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-bottom: 4px;
+}
+.tag-romance { background-color: var(--color-romance); color: #7a3e40; }
+.tag-fun { background-color: var(--color-fun); color: #735314; }
+.tag-daily { background-color: var(--color-daily); color: #2b5427; }
+.todo-item-text { font-size: 13px; line-height: 1.4; }
 
-.screen-subtitle {
-    font-size: 13px;
-    color: var(--text-sub);
-    text-align: center;
-    margin-bottom: 20px;
-}
+.screen-title { font-size: 20px; text-align: center; margin-bottom: 4px; font-weight: bold; }
+.screen-subtitle { font-size: 13px; color: var(--text-sub); text-align: center; margin-bottom: 16px; }
 
-.specimen-box {
-    background-color: var(--card-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 20px;
-    flex: 1;
-    padding: 16px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: min-content;
-    gap: 16px;
-    overflow-y: auto;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+.puzzle-archive-box {
+    background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 20px;
+    flex: 1; padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: min-content; gap: 16px; overflow-y: auto;
 }
+.archive-item {
+    background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 14px;
+    padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer;
+}
+.archive-icon { font-size: 36px; margin-bottom: 4px; }
+.archive-name { font-size: 12px; font-weight: bold; text-align: center; }
 
-/* 標本スロット */
-.specimen-item {
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    padding: 8px;
-    transition: transform 0.2s;
-}
-
-.specimen-item:hover {
-    transform: scale(1.03);
-}
-
-.specimen-thumb {
-    transform: scale(0.4);
-    height: 30px;
-    margin-bottom: -10px;
-}
-
-.specimen-name {
-    font-size: 11px;
-    color: var(--text-main);
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-    font-weight: bold;
-}
-
-/* 詳細ポップアップ調整 */
-.detail-content {
-    max-height: 90%;
-    overflow-y: auto;
-}
-
-.detail-char-view {
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.detail-info-table {
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.info-row {
-    border-bottom: 1px solid var(--border-color);
-    padding: 12px 0;
-}
-
-.info-label {
-    font-size: 12px;
-    color: var(--text-sub);
-    display: block;
-    margin-bottom: 4px;
-}
-
-.info-value {
-    font-size: 14px;
-    color: var(--text-main);
-}
-
-.memory-list {
-    max-height: 120px;
-    overflow-y: auto;
-    background-color: var(--bg-color);
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.memory-item {
-    margin-bottom: 6px;
-    padding-bottom: 6px;
-    border-bottom: 1px dashed rgba(0,0,0,0.05);
-}
-.memory-item:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-}
+.detail-content { max-height: 90%; overflow-y: auto; }
+.detail-info-table { text-align: left; margin-bottom: 20px; }
+.info-row { border-bottom: 1px solid var(--border-color); padding: 12px 0; }
+.info-label { font-size: 12px; color: var(--text-sub); display: block; margin-bottom: 4px; }
+.info-value { font-size: 14px; color: var(--text-main); }
+.memory-list { max-height: 120px; overflow-y: auto; background-color: var(--bg-color); padding: 10px; border-radius: 8px; font-size: 13px; line-height: 1.5; }
+.memory-item { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed rgba(0,0,0,0.05); }
+.memory-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
